@@ -6,16 +6,16 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+
 import org.openqa.selenium.WindowType;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
+
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
+
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -38,7 +38,7 @@ public class Automation_Project
 	public void launch_browser()
 	{
 		ChromeOptions handlingSSL = new ChromeOptions();
-		handlingSSL.setAcceptInsecureCerts(true);
+		handlingSSL.setAcceptInsecureCerts(true); //SSL Certificate
 		
 		WebDriverManager.chromedriver().setup();
 		//System.setProperty("webdriver.chrome.driver","C:\\Users\\Admin\\Desktop\\Sahil\\Study Material\\chromedriver-win32\\chromedriver.exe");
@@ -135,7 +135,7 @@ public class Automation_Project
 	@AfterClass
 	public void after_class()
 	{
-		extent.flush();
+		extent.flush(); //For Report is create
 	}
 		
 	
