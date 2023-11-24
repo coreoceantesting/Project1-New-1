@@ -26,6 +26,7 @@ import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import main_package.main_class;
+import main_package.main_class1;
 
 public class Automation_Project 
 {
@@ -33,22 +34,25 @@ public class Automation_Project
 	ExtentHtmlReporter htmlreport;
 	ExtentReports extent;
 	public main_class CM;
+	public main_class1 CM1;
 	
 	@BeforeTest
 	public void launch_browser()
 	{
-		ChromeOptions handlingSSL = new ChromeOptions();
-		handlingSSL.setAcceptInsecureCerts(true); //SSL Certificate
+		ChromeOptions chromeoptions = new ChromeOptions();
+		chromeoptions.setAcceptInsecureCerts(true); //SSL Certificate
+		chromeoptions.addArguments("--disable-notifications");
 		
 		WebDriverManager.chromedriver().setup();
 		//System.setProperty("webdriver.chrome.driver","C:\\Users\\Admin\\Desktop\\Sahil\\Study Material\\chromedriver-win32\\chromedriver.exe");
-		driver = new ChromeDriver(handlingSSL); //Initialize WebDriver
+		driver = new ChromeDriver(chromeoptions); //Initialize WebDriver
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
 		driver.get("https://www.flipkart.com/");
 		
 		
 		CM = new main_class(driver); //Called Main Method
+		CM1 = new main_class1(driver); //Called the 2nd main method
 	}
 	@BeforeClass
 	public void before_class()
@@ -125,6 +129,28 @@ public class Automation_Project
 		CM.u_r(driver);
 		CM.emp_search();
 		
+	}
+
+	@Test( priority = 3)
+	public void test3()
+	{
+		ExtentTest t4 = extent.createTest("Tst Case 4--->RedBus Page", "To check the RedBus websites");
+		t4.log(Status.INFO, "Book Journey Ticket"); //New Test case open 
+		driver.switchTo().newWindow(WindowType.TAB);
+		driver.navigate().to("https://www.redbus.in/"); //URL open in new tab
+		driver.navigate().refresh(); //For Refresh Page
+
+		//Find title of URl
+		String title = driver.getTitle();
+		Assert.assertEquals("Red Bus for book travelling ticket", title);//Compare exected to actual using assert method
+		System.out.println(title);//Print the title
+
+
+		t4.log(Status.INFO, "Enter From Destination");
+		CM1.from_place(); //Called main method
+		t4.log(Status.PASS, "From Destination enter successfully");
+
+
 	}
 	
 	@AfterTest
